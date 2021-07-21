@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_main"
+    android:id="@+id/mainGridLayout"
+    android:rowCount="8"
+    android:columnCount="3">
+
+    <Button
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/getEuroRates"
+        android:id="@+id/getEuroRate"/>
+
+    <EditText
+        android:layout_row="0"
+        android:layout_column="2"
+        android:inputType="number"
+        android:id="@+id/euroRate"
+        android:text="@{euroRate}"
+        android:layout_width="100dp"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:layout_row="1"
+        android:layout_column="2"
+        android:id="@+id/textBox"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/internetAvailable"/>
+
+    <TextView
+        android:layout_row="4"
+        android:layout_column="0"
+        android:text="@string/homeBudgetMoney"
+        android:layout_width="100dp"
+        android:layout_height="50dp"/>
+
+    <EditText
+        android:id="@+id/homeBudgetMoney"
+        android:inputType="number"
+        android:layout_row="4"
+        android:layout_column="1"
+        android:layout_width="100dp"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:id="@+id/addItemBtn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_row="4"
+        android:layout_column="2"
+        android:text="@string/addSalary"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_row="5"
+        android:layout_columnSpan="3"/>
+
+    <Button
+        android:id="@+id/calculateBudgetBtn"
+        android:text="@string/calculateBudget"
+        android:layout_row="7"
+        android:layout_column="0"
+        android:layout_width="100dp"
+        android:layout_height="50dp"/>
+</GridLayout>
