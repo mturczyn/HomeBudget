@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace AddTranslationCore.Abstractions
+namespace HomeBudget
 {
     public abstract class BaseObservable : INotifyPropertyChanged
     {

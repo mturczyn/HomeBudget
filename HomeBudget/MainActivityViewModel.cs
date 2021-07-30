@@ -1,5 +1,5 @@
-using AddTranslationCore.Abstractions;
 using HomeBudget.Model;
+using HomeBudget.Model.NbpApiModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,56 +7,49 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace HomeBudget
 {
 #warning separate files for this struct and enum?
-    public enum Currency
-    {
-        PLN,
-        EUR,
-    }
-    public class Salary : BaseObservable
-    {
-        private Currency _currency;
-        public Currency Currency 
-        { 
-            get => _currency;
-            set => Set(value, ref _currency); 
-        }
-        private double _salaryAmount;
-        public double SalaryAmount 
-        {
-            get => _salaryAmount;
-            set => Set(value, ref _salaryAmount);
-        }
-        private double _partAmount;
-        public double PartAmount 
-        {
-            get => _partAmount; 
-            set => Set(value, ref _partAmount); 
-        }
-    }
+
     public class MainActivityViewModel : BaseObservable
     {
         public List<Currency> Currencies { get; } = new List<Currency>();
-        public double? EuroRate { get; private set; }
-        public double HomeBudget { get; set; }
-        public BindingList<Salary> Salaries { get; } = new BindingList<Salary>();
+        private double? _euroRate;
+        public double? EuroRate
+        {
+            get => _euroRate;
+            set => Set(value, ref _euroRate); 
+        }
+        private double _homeBudget;
+        public double HomeBudget
+        {
+            get => _homeBudget;
+            set => Set(value, ref _homeBudget);
+        }
+        private bool _internetConnection;
+        public bool InternetConnection
+        {
+            get => _internetConnection;
+            set => Set(value, ref _internetConnection);
+        }
+
+        public ObservableCollection<Salary> Salaries { get; } = new ObservableCollection<Salary>();
 
         public MainActivityViewModel()
         {
             Currencies = Enum.GetValues(typeof(Currency)).Cast<Currency>().ToList();
-            Salaries.ListChanged += Salaries_ListChanged;
         }
 
-        public bool CheckInternetConnection() => Connectivity.NetworkAccess != NetworkAccess.Internet;
+        private bool CheckInternetConnection() => InternetConnection = Connectivity.NetworkAccess != NetworkAccess.Internet;
 
         public async Task UpdateEuroRateAsync()
         {
+            if (CheckInternetConnection())
+                return;
+
             using var http = new HttpClient();
 
             var jsonResponse = await http.GetStringAsync("https://api.nbp.pl/api/exchangerates/rates/A/EUR?format=json");
@@ -83,7 +76,7 @@ namespace HomeBudget
 
         public void CalculateBudgetForSalaries()
         {
-            if (! EuroRate.HasValue)
+            if (!EuroRate.HasValue)
                 throw new NotImplementedException();
 
             var results = new double[Salaries.Count];
@@ -97,11 +90,6 @@ namespace HomeBudget
 
             for (int i = 0; i < recalculatedToPln.Length; i++)
                 Salaries[i].PartAmount = HomeBudget * recalculatedToPln[i] / sum;
-        }
-
-        private void Salaries_ListChanged(object sender, ListChangedEventArgs e)
-        {
-
         }
     }
 }

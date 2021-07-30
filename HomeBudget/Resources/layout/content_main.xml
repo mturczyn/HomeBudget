@@ -8,8 +8,8 @@
     tools:showIn="@layout/activity_main"
     android:id="@+id/mainGridLayout"
     android:rowCount="8"
+    android:background="#bbb"
     android:columnCount="3">
-
     <Button
         android:layout_row="0"
         android:layout_column="0"
@@ -23,7 +23,7 @@
         android:layout_column="2"
         android:inputType="number"
         android:id="@+id/euroRate"
-        android:text="@{euroRate}"
+        android:background="#444"
         android:layout_width="100dp"
         android:layout_height="50dp"/>
 

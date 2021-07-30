@@ -1,13 +1,13 @@
 ﻿using Android.App;
 using Android.Views;
 using Android.Widget;
+using HomeBudget.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace HomeBudget.Adapters
 {
-    public class SalariesListAdapter : Android.Widget.ArrayAdapter<Salary>
+    public class SalariesListAdapter : ArrayAdapter<Salary>
     {
         private class ViewHolder : Java.Lang.Object
         {
@@ -28,7 +28,7 @@ namespace HomeBudget.Adapters
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
-        {   
+        {
             View view = convertView; // re-use an existing view, if one is available
             ViewHolder vw;
             var item = base.GetItem(position);
@@ -50,7 +50,7 @@ namespace HomeBudget.Adapters
 
                 vw.SalaryAmount.TextChanged += SalaryAmount_TextChanged;
 
-                vw.CurrenciesSpinner.ItemSelected += Spinner_ItemSelected; 
+                vw.CurrenciesSpinner.ItemSelected += Spinner_ItemSelected;
                 var dataAdapter = new ArrayAdapter<Currency>(this.Context, Android.Resource.Layout.SimpleSpinnerItem, _currencies);  //simple_spinner_item
                 dataAdapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);//simple_spinner_dropdown_item
                 vw.CurrenciesSpinner.Adapter = dataAdapter;

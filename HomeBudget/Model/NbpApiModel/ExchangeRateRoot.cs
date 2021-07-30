@@ -1,4 +1,4 @@
-﻿namespace HomeBudget.Model
+﻿namespace HomeBudget.Model.NbpApiModel
 {
     public class ExchangeRateRoot
     {
