@@ -149,7 +149,8 @@ namespace HomeBudget
                     UpdateControl<EditText>(Resource.Id.euroRate,
                         (et) =>
                         {
-                            if(!double.TryParse(et.Text, out double result))
+                            var result = 0D;
+                            if(! string.IsNullOrEmpty(et.Text) && !double.TryParse(et.Text, out result))
                                 et.Text = "0";
                             else if (result != _mainActivityController.EuroRate) 
                                 et.Text = string.Format("{0:0.0000}", _mainActivityController.EuroRate); 
