@@ -43,11 +43,22 @@ namespace HomeBudget
             Currencies = Enum.GetValues(typeof(Currency)).Cast<Currency>().ToList();
         }
 
-        private bool CheckInternetConnection() => InternetConnection = Connectivity.NetworkAccess != NetworkAccess.Internet;
+        /// <summary>
+        /// Raising all events to update view.
+        /// </summary>
+        public void UpdateBindings()
+        {
+            RaisePropertyChanged(nameof(EuroRate));
+            RaisePropertyChanged(nameof(Currencies));
+            RaisePropertyChanged(nameof(HomeBudget));
+            RaisePropertyChanged(nameof(InternetConnection));
+        }
+
+        public bool UpdateInternetConnection() => InternetConnection = Connectivity.NetworkAccess == NetworkAccess.Internet;
 
         public async Task UpdateEuroRateAsync()
         {
-            if (CheckInternetConnection())
+            if(!UpdateInternetConnection())
                 return;
 
             using var http = new HttpClient();

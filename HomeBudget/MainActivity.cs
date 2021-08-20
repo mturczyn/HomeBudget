@@ -4,7 +4,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using Google.Android.Material.Button;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
 using HomeBudget.Adapters;
@@ -40,6 +39,8 @@ namespace HomeBudget
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
             InitBindings();
+            _mainActivityController.UpdateInternetConnection();
+            _mainActivityController.UpdateBindings();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -92,7 +93,11 @@ namespace HomeBudget
             // Further we handle the other direction of binding - changing viewmodel's properties
             // based on changes in UI (forwarding user interactions).
             var homeBudget = FindViewById<EditText>(Resource.Id.homeBudgetMoney);
-            homeBudget.TextChanged += (s, e) => _mainActivityController.HomeBudget = double.Parse(homeBudget.Text);
+            homeBudget.TextChanged += (s, e) =>
+            {
+                if (double.TryParse(homeBudget.Text, out var parsed))
+                    _mainActivityController.HomeBudget = parsed;
+            };
 
             AndroidX.AppCompat.Widget.Toolbar toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
@@ -123,7 +128,7 @@ namespace HomeBudget
             updateAction(control);
         }
 
-        #region Binding TO View Model, updating UI based on changes in VM
+        #region Binding to View Model, updating UI based on changes in VM
         private void _mainActivityControllerSalaries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action != System.Collections.Specialized.NotifyCollectionChangedAction.Add) return;
@@ -150,15 +155,28 @@ namespace HomeBudget
                         (et) =>
                         {
                             var result = 0D;
-                            if(! string.IsNullOrEmpty(et.Text) && !double.TryParse(et.Text, out result))
+                            if (!string.IsNullOrEmpty(et.Text) && !double.TryParse(et.Text, out result))
                                 et.Text = "0";
-                            else if (result != _mainActivityController.EuroRate) 
-                                et.Text = string.Format("{0:0.0000}", _mainActivityController.EuroRate); 
+                            else if (result != _mainActivityController.EuroRate)
+                                et.Text = string.Format("{0:0.0000}", _mainActivityController.EuroRate);
                         });
                     break;
                 case nameof(MainActivityViewModel.InternetConnection):
                     UpdateControl<TextView>(Resource.Id.textBox,
-                        tv => tv.Text = _mainActivityController.InternetConnection ? string.Empty : "No internet connection");
+                        tv =>
+                        {
+                            if (_mainActivityController.InternetConnection)
+                            {
+                                tv.Text = Resources.GetString(Resource.String.internetAvailable);
+                                tv.SetTextColor(Android.Graphics.Color.Green);
+                            }
+                            else
+                            {
+                                tv.Text = Resources.GetString(Resource.String.internetNotAvailable);
+                                tv.SetTextColor(Android.Graphics.Color.Red);
+                            }
+                        });
+
                     break;
             }
         }

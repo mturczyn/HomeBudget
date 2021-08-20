@@ -3,7 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="getEuroRates">Get euro rate</string>
     <string name="internetAvailable">Internet is available</string>
+    <string name="internetNotAvailable">No internet connection</string>
     <string name="calculateBudget">Calculate Budget</string>
     <string name="homeBudgetMoney">Monthly home budget</string>
     <string name="addSalary">Add salary</string>
+    <string name="enterEuroRateOrGet">Enter Euro rate or get from internet:</string>
 </resources>

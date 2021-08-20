@@ -10,66 +10,90 @@
     android:rowCount="8"
     android:background="#bbbbbb"
     android:columnCount="3">
-    <Button
+
+    <TextView
         android:layout_row="0"
         android:layout_column="0"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="@string/getEuroRates"
-        android:id="@+id/getEuroRate"/>
+        android:text="@string/enterEuroRateOrGet"/>
 
     <EditText
+        android:layout_margin="10dp"
         android:layout_row="0"
-        android:layout_column="2"
+        android:layout_column="1"
         android:inputType="number"
         android:id="@+id/euroRate"
-        android:background="#444444"
         android:layout_width="100dp"
         android:layout_height="50dp"/>
 
-    <TextView
-        android:layout_row="1"
+    <Button
+        android:layout_row="0"
         android:layout_column="2"
-        android:id="@+id/textBox"
+        android:textSize="10dp"
+        android:padding="10dp"
         android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="@string/getEuroRates"
+        android:id="@+id/getEuroRate"/>
+
+    <TextView
+        android:textAlignment="center"
+        android:textColor="#10A010"
+        android:textFontWeight="1000"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:id="@+id/textBox"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/internetAvailable"/>
 
     <TextView
         android:layout_row="4"
         android:layout_column="0"
+        android:textAlignment="center"
+        android:paddingTop="0dp"
         android:text="@string/homeBudgetMoney"
-        android:layout_width="100dp"
-        android:layout_height="50dp"/>
+        android:layout_width="150dp"
+        android:layout_height="40dp"/>
 
     <EditText
         android:id="@+id/homeBudgetMoney"
         android:inputType="number"
+        android:layout_margin="10dp"
         android:layout_row="4"
         android:layout_column="1"
         android:layout_width="100dp"
-        android:layout_height="50dp"/>
+        android:layout_height="60dp"/>
 
     <Button
         android:id="@+id/addItemBtn"
+        android:textSize="10dp"
+        android:padding="10dp"
         android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_row="4"
-        android:layout_column="2"
+        android:layout_height="40dp"
+        android:layout_row="5"
+        android:layout_column="0"
         android:text="@string/addSalary"/>
+
+    <Button
+        android:id="@+id/calculateBudgetBtn"
+        android:text="@string/calculateBudget"
+        android:layout_row="5"
+        android:layout_column="1"
+        android:layout_columnSpan="2"
+        
+        android:textSize="10dp"
+        android:padding="10dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"/>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_row="5"
+        android:layout_row="6"
         android:layout_columnSpan="3"/>
 
-    <Button
-        android:id="@+id/calculateBudgetBtn"
-        android:text="@string/calculateBudget"
-        android:layout_row="7"
-        android:layout_column="0"
-        android:layout_width="100dp"
-        android:layout_height="50dp"/>
 </GridLayout>
